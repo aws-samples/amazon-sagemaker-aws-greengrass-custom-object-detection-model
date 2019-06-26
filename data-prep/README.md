@@ -1,4 +1,13 @@
-### Capture video from web cam
+# Steps and Scripts for data preparation
+
+1. [Capture video from web cam](#00_get_video)
+1. [Extracting frames from video and uploading to s3](#01_video_to_frame_utils)
+1. [Generate Ground Truth Labeling manifest](#02_generate_gt_manifest)
+1. [Visualize the Labeling job manifest](#03)
+1. [Submit Ground Truth labeling job](#04)
+
+### Capture video from web cam <a name="00_get_video"></a>
+
 
 ```bash
 pip install -r requirements.txt
@@ -7,7 +16,8 @@ python 00_get_video.py -n <name-of-video> -c <camera-id>
 
 use `q` to stop recording
 
-### Extracting frames from video and uploading to s3 
+### Extracting frames from video and uploading to s3 <a name="01_video_to_frame_utils"></a>
+ 
 
 ```bash
 $ python 01_video_to_frame_utils.py -h
@@ -80,7 +90,8 @@ Review the visualization to:
 * Determine whether the frames contain any company confidential information: if yes, either redact/filter out the confidential information, or choosing only a private workforce to label your data  
 * Decide if there are too many “empty” frames (ie. background only) that don't contain the objects you are trying to detect
 
-### Generate Ground Truth Labeling manifest  
+### Generate Ground Truth Labeling manifest <a name="02_generate_gt_manifest"></a>
+
 
 If you decide this video contains frames you want to have labeled, we need to generate a manifest file for Ground Truth Labeling job.
 
@@ -115,7 +126,8 @@ SAMPLING_RATE=5
 python data-prep/02_generate_gt_manifest.py -b $S3_BUCKET -k $S3_KEY_PREFIX -r $SAMPLING_RATE -d tmp/
 ```
 
-### Visualize the Labeling job manifest  
+### Visualize the Labeling job manifest <a name="03"></a>
+ 
 
 Before we submit the Ground Truth labeling job, check the set of images you want labeled by visualizing the thumbnails of images included in the manifest
 
@@ -155,6 +167,6 @@ IMAGE_DIRECTORY=<local-directory-containing-frames-if-available>
 python data-prep/03_visualize_gt_labeling_manifest.py -b $S3_BUCKET -k $S3_KEY_MANFIST -i $IMAGE_DIRECTORY
 ```
 
-### Submit Ground Truth labeling job 
+### Submit Ground Truth labeling job <a name="04"></a>
 
 Use either the SageMaker Ground Truth management console or Jupyter Notebook [04_create_ground_truth_job.ipynb](./04_create_ground_truth_job.ipynb) to submit labeling job to Ground Truth 
