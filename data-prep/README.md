@@ -157,4 +157,4 @@ python data-prep/03_visualize_gt_labeling_manifest.py -b $S3_BUCKET -k $S3_KEY_M
 
 ### Submit Ground Truth labeling job 
 
-Use either the console or Jupyter Notebook `04_create_ground_truth_job.ipynb` to submit labeling job to Ground Truth 
+Use either the SageMaker Ground Truth management console or Jupyter Notebook [04_create_ground_truth_job.ipynb](./04_create_ground_truth_job.ipynb) to submit labeling job to Ground Truth 
