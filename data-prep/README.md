@@ -13,6 +13,7 @@ use `q` to stop recording
 $ python 01_video_to_frame_utils.py -h
 usage: 01_video_to_frame_utils.py [-h] -k VIDEO_S3_KEY -b VIDEO_S3_BUCKET
                                   [-d WORKING_DIRECTORY] [-v VISUALIZE_VIDEO]
+                                  -o OUTPUT_S3_BUCKET
                                   [-r VISUALIZE_SAMPLE_RATE] [-u]
                                   [-p FRAME_PREFIX] [-c CLEANUP_FILES]
                                   [-pp VIDEO_PREVIEW_PREFIX]
@@ -28,6 +29,8 @@ optional arguments:
   -v VISUALIZE_VIDEO, --visualize_video VISUALIZE_VIDEO
                         Whether to generate a preview for the frames in the
                         video.
+  -o OUTPUT_S3_BUCKET, --output_s3_bucket OUTPUT_S3_BUCKET
+                        S3 bucket to store outputs
   -r VISUALIZE_SAMPLE_RATE, --visualize_sample_rate VISUALIZE_SAMPLE_RATE
                         For visualizing the video, how frequent (in seconds)
                         to sample the frames. default to sample every second.
@@ -44,22 +47,23 @@ optional arguments:
   -pp VIDEO_PREVIEW_PREFIX, --video_preview_prefix VIDEO_PREVIEW_PREFIX
                         the S3 prefix to upload the video
                         preview/visualization. default is previews/video/
+                        
 ```
 
-Example:
+For example:
 
 ```bash
 mkdir tmp
-S3_BUCKET=<your-bucket-name>
-S3_KEY=<s3-key-of-uploaded-video>
-python 01_video_to_frame_utils.py --video_s3_bucket $S3_BUCKET --video_s3_key $S3_KEY --working_directory tmp/ --visualize_video True --visualize_sample_rate 1
+VIDEO_S3_BUCKET=greengrass-object-detection-blog
+VIDEO_S3_KEY=videos/blue_box_1.mp4
+OUTPUT_S3_BUCKET=<your-bucket-name>
+python 01_video_to_frame_utils.py --video_s3_bucket $VIDEO_S3_BUCKET --video_s3_key $VIDEO_S3_KEY --working_directory tmp/ --visualize_video True --visualize_sample_rate 1 -o $OUTPUT_S3_BUCKET
 ```
 
-
-Once we extracted frames, we can simply use s3 sync to upload them S3 (The script above can also upload to S3 if you use the `-u` flag. However, `s3 sync` is more performant): 
+Once frames are extracted from videos, we can simply use s3 sync to upload them S3 (The script above can also upload to S3 if you use the `-u` flag. However, `s3 sync` is more performant): 
 
 ```bash
-aws s3 sync yellow_box_2/ s3://{bucket-name}/frames/yellow_box_2/
+aws s3 sync tmp/yellow_box_2/ s3://{bucket-name}/frames/yellow_box_2/
 ```
 
 ### Review contents of your extracted frames 
