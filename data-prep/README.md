@@ -1,5 +1,10 @@
 # Steps and Scripts for data preparation
 
+### End-to-end walkthrough
+
+End-to-end walkthrough notebook: [Data prep tutorial with sample video](./Data%20prep%20tutorial%20with%20sample%20video.ipynb)
+
+### README on individual scripts
 1. [Capture video from web cam](#00_get_video)
 1. [Extracting frames from video and uploading to s3](#01_video_to_frame_utils)
 1. [Generate Ground Truth Labeling manifest](#02_generate_gt_manifest)
