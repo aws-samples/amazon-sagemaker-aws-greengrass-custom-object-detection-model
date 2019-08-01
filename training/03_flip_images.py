@@ -55,6 +55,7 @@ def rotate(image_local_path, working_dir, cw=True):
 
 
 def transform_and_upload(transformation, image_path, working_directory, s3_bucket, s3_prefix, cleanup):
+    
     if transformation is Transform.X_FLIP:
         transformed = flip(image_path, working_directory, x_axis=True)
     elif transformation is Transform.Y_FLIP:
@@ -78,17 +79,17 @@ def transform_img(img_s3_uri, working_directory, output_s3_bucket, cleanup=True)
     logger.info("image: {}".format(img_id))
 
     img_ccw = 'frames/ccw/' + img_id + '-ccw-rotate.jpg'
-
-    if utils.exists_in_s3(s3_bucket, img_ccw):
-        logger.info("augmentation already exists: s3:/{}/{}".format(s3_bucket, img_ccw))
+    
+    if utils.exists_in_s3(output_s3_bucket, img_ccw):
+        logger.info("augmentation already exists: s3://{}/{}".format(output_s3_bucket, img_ccw))
     else:
-        logger.info("augmentation does not exist: s3:/{}/{}".format(s3_bucket, img_ccw))
+        logger.info("augmentation does not exist: s3://{}/{}".format(output_s3_bucket, img_ccw))
         image_path = utils.download_file(img_s3_uri, working_directory)
         transform_and_upload(transformation=Transform.X_FLIP, image_path=image_path,
                              working_directory=working_directory, s3_bucket=output_s3_bucket, s3_prefix='frames/x-flipped',
                              cleanup=cleanup)
         transform_and_upload(transformation=Transform.Y_FLIP, image_path=image_path,
-                             working_directory=working_directory, s3_bucket=output_s3_bucket, s3_prefix='frames/x-flipped',
+                             working_directory=working_directory, s3_bucket=output_s3_bucket, s3_prefix='frames/y-flipped',
                              cleanup=cleanup)
         transform_and_upload(transformation=Transform.CW_ROTATE, image_path=image_path,
                              working_directory=working_directory, s3_bucket=output_s3_bucket, s3_prefix='frames/cw',
