@@ -1,0 +1,44 @@
+#Greeengrass Group definition file
+Group:
+  name: GG_Object_Detection
+Cores:
+  - name: GG_Object_Detection_Core
+    key_path: ./certs
+    config_path: ./config
+    SyncShadow: True
+
+# Uncomment below section as you add ML resource
+
+#Resources:
+#  - Name: MyObjectDetectionModel
+#    Id: MyObjectDetectionModel
+#    S3MachineLearningModelResourceData:
+#      DestinationPath: /ml/od/
+#      S3Uri: s3://<my-bucket>/deployable-model/model.tar.gz
+
+
+# Uncomment below section as you lambda  resource
+#Lambdas:
+#  - name: BlogInfer
+#    handler: main.lambda_handler
+#    package: ./run_model/src
+#    alias: dev
+#    greengrassConfig:
+#      MemorySize: 900000 # Kb
+#      Timeout: 10 # seconds
+#      Pinned: True # True for long-lived functions
+#      Environment:
+#        AccessSysfs: True
+#        ResourceAccessPolicies:
+#          - ResourceId: MyObjectDetectionModel
+#            Permission: 'rw'
+#
+#Subscriptions:
+#  # Test Subscriptions from the cloud
+#  - Source: cloud
+#    Subject: blog/infer/input
+#    Target: Lambda::BlogInfer
+#  - Source: Lambda::BlogInfer
+#    Subject: blog/infer/output
+#    Target: cloud
+#
