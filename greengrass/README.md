@@ -1,5 +1,9 @@
 # Deploy Object Detection model to the edge
 
+## Prereqs
+
+Refer to the [Greengrass requirements page](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-gs.html#gg-requirements) 
+
 ## Set up environment and AWS IoT Greengrass Core on edge device
 
 ### Install machine learning dependencies on the device
