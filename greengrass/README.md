@@ -18,5 +18,6 @@ Since OpenCV is also fairly large dependency, let's install it on our device too
 $ sudo pip2 install opencv-python
 ```
 
-The reason we use sudo here is because IoT Greengrass runs under `ggc_user`. Regular pip install will install it under your OS user, which `ggc_user` won’t have access to. Alternatively you could install the packages somewhere else as long as `ggc_user` can access that directory.
-
+> Note 1: The reason we use sudo here is because IoT Greengrass runs under `ggc_user`. Regular pip install will install it under your OS user, which `ggc_user` won’t have access to. Alternatively you could install the packages somewhere else as long as `ggc_user` can access that directory.
+> 
+> Note 2: The reason we use pip2 here is because we use `greengo` in this blog to set up Greengrass, which only supports python2 at the moment. 
