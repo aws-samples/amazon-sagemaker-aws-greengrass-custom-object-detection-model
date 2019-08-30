@@ -17,6 +17,7 @@ ML_MODEL_PATH = os.path.join(ML_MODEL_BASE_PATH, ML_MODEL_PREFIX)
 client = greengrasssdk.client('iot-data')
 model = None
 
+OUTPUT_TOPIC = 'blog/infer/output'
 
 # Load the model at startup
 def initialize(param_path=ML_MODEL_PATH):
@@ -29,10 +30,19 @@ def lambda_handler(event, context):
     Gets called each time the function gets invoked.
     """
     if 'filepath' not in event:
-        logging.info('filepath is not in input event. nothing to do. returning.')
+        msg = 'filepath is not in input event. nothing to do. returning.'
+        logging.info(msg)
+        client.publish(topic=OUTPUT_TOPIC, payload=msg)
         return None
 
     filepath = event['filepath']
+
+    if not os.path.exists(filepath): 
+        msg = 'filepath does not exist. make sure \'{}\' exists on the device'.format(filepath)
+        logging.info(msg)
+        client.publish(topic=OUTPUT_TOPIC, payload=msg)
+        return None
+
     logging.info('predicting on image at filepath: {}'.format(filepath))
     start = int(round(time.time() * 1000))
     prediction = model.predict_from_file(filepath)
@@ -45,7 +55,7 @@ def lambda_handler(event, context):
         'timestamp': time.time(),
         'filepath': filepath
     }
-    client.publish(topic='blog/infer/output', payload=json.dumps(response))
+    client.publish(topic=OUTPUT_TOPIC, payload=json.dumps(response))
     return response
 
 
