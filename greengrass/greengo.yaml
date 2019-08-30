@@ -14,7 +14,7 @@ Cores:
 #    Id: MyObjectDetectionModel
 #    S3MachineLearningModelResourceData:
 #      DestinationPath: /ml/od/
-#      S3Uri: s3://<my-bucket>/deployable-model/model.tar.gz
+#      S3Uri: s3://greengrass-object-detection-blog/deployable-model/deploy_model.tar.gz
 
 
 # Uncomment below section as you lambda  resource
