@@ -16,8 +16,34 @@ Cores:
 #      DestinationPath: /ml/od/
 #      S3Uri: s3://greengrass-object-detection-blog/deployable-model/deploy_model.tar.gz
 
+# Uncomment below ONLY if you have a NVDIA GPU enabled device
+#
+#  - Name: Nvidia0
+#    Id: Nvidia0
+#    LocalDeviceResourceData:
+#      SourcePath: /dev/nvidia0
+#      GroupOwnerSetting:
+#        AutoAddGroupOwner: True
+#  - Name: Nvidiactl
+#    Id: Nvidiactl
+#    LocalDeviceResourceData:
+#      SourcePath: /dev/nvidiactl
+#      GroupOwnerSetting:
+#        AutoAddGroupOwner: True
+#  - Name: NvidiaUVM
+#    Id: NvidiaUVM
+#    LocalDeviceResourceData:
+#      SourcePath: /dev/nvidia-uvm
+#      GroupOwnerSetting:
+#        AutoAddGroupOwner: True
+#  - Name: NvidiaUVMTools
+#    Id: NvidiaUVMTools
+#    LocalDeviceResourceData:
+#      SourcePath: /dev/nvidia-uvm-tools
+#      GroupOwnerSetting:
+#        AutoAddGroupOwner: True
 
-# Uncomment below section as you lambda  resource
+# Uncomment below section as you lambda resource
 #Lambdas:
 #  - name: BlogInfer
 #    handler: main.lambda_handler
@@ -33,6 +59,17 @@ Cores:
 #          - ResourceId: MyObjectDetectionModel
 #            Permission: 'rw'
 #
+# Uncomment below only if you have a NVDIA GPU enabled device
+#         - ResourceId: Nvidia0
+#           Permission: 'rw'
+#         - ResourceId: Nvidiactl
+#           Permission: 'rw'
+#         - ResourceId: NvidiaUVM
+#           Permission: 'rw'
+#         - ResourceId: NvidiaUVMTools
+#           Permission: 'rw'
+
+
 #Subscriptions:
 #  # Test Subscriptions from the cloud
 #  - Source: cloud
