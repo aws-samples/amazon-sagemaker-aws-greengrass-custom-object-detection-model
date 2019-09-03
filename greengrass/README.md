@@ -7,7 +7,7 @@
   * [Create an IoT greengrass group using Greengo](#create-an-iot-greengrass-group-using-greengo)
   * [Start AWS IoT greengrass core](#start-aws-iot-greengrass-core)
   * [Initial IoT Greengrass group deployment](#initial-iot-greengrass-group-deployment)
-- [Test inference code on device directly (Optional)](#test-inference-code-on-device-directly--optional-)
+- [Test inference code on device directly - Optional](#unittest)
 - [Creating your inference pipeline in AWS IoT Greengrass Core](#creating-your-inference-pipeline-in-aws-iot-greengrass-core)
   * [Configure ML resource in IoT greengrass using greengo](#configure-ml-resource-in-iot-greengrass-using-greengo)
   * [Configure lambda function with greengo](#configure-lambda-function-with-greengo)
@@ -148,7 +148,7 @@ $ greengo deploy
 
 This will deploy the configurations you define in `greengo.yaml` to the IoT Greengrass Core on the edge device.  So far we haven't defined any Lambda functions yet in our Greengo configuration, so this deployment just initializes the IoT Greengrass Core. We will add a Lambda function to our IoT Greengrass set up after we do a quick sanity test in the next step.
 
-## Test inference code on device directly (Optional) 
+## Test inference code on device directly (Optional) <a href="#unittest"></a>
 
 Although an optional step, it’s always helpful to run a quick test on our edge device to verify that the non-Greengrass dependencies (MXNet, etc.) has been set up properly on the device. 
 
