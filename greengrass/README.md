@@ -55,3 +55,75 @@ $ sudo tar -xzvf greengrass-linux-x86-64-1.9.2.tar.gz -C /
 $ ls /greengrass/
 certs  config  ggc  ota
 ```
+
+### Create an IoT greengrass group using Greengo
+
+On your laptop/workstation, git clone this repo. In the `greengrass/` folder, you will a see  `greengo.yaml` file, which defines configurations and lambda functions for an IoT Greengrass Group. The top portion of the file defines the name of the IoT Greengrass Group and IoT Greengrass Cores:
+
+```
+Group:
+  name: GG_Object_Detection
+Cores:
+  - name: GG_Object_Detection_Core
+    key_path: ./certs
+    config_path: ./config
+    SyncShadow: True
+```
+
+For the initial setup of the IoT Greengrass Group resources in AWS IoT, run this command below in the folder that `greengo.yaml` lives in.
+
+```
+`pip install greengo
+greengo create`
+```
+
+ This creates all greengrass group artifacts in AWS and places the certificates and `config.json `for IoT Greengrass Core in `./certs/` and `./config/.` It will also generate a state file in `.gg/gg_state.json` that references all the right resources during deployment: 
+
+```
+├── .gg
+│   └── gg_state.json
+├── certs
+│   ├── GG_Object_Detection_Core.key
+│   ├── GG_Object_Detection_Core.pem
+│   └── GG_Object_Detection_Core.pub
+├── config
+│   └── config.json
+```
+
+Copy the `certs` and `config` folder to the edge device (or test EC2 instance) using [scp](https://linux.die.net/man/1/scp), and then copy them to the `/greengrass/certs/` and `/greengrass/config/`  directories on the device
+
+```
+sudo cp certs/* /greengrass/certs/
+sudo cp config/* /greengrass/config/
+```
+
+On your device, also download the root CA certificate compatible with the certificates Greengo generated to the `/greengrass/certs/` folder:
+
+```
+`cd /greengrass/certs/
+sudo wget -O root.ca.pem https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem`
+```
+
+
+### Start AWS IoT greengrass core
+
+Now we are ready to start the IoT Greengrass Core daemon on the edge device. 
+
+```
+$ sudo /greengrass/ggc/core/greengrassd start
+Setting up greengrass daemon
+Validating hardlink/softlink protection
+Waiting for up to 1m10s for Daemon to start
+
+Greengrass successfully started with PID: 4722
+```
+
+### Initial IoT Greengrass group deployment 
+
+Once the IoT Greengrass daemon is up and running, return to where you have downloaded the code repo from GitHub on your laptop/workstation, then go to the `greengrass` folder (where `greengo.yaml` resides) and run:
+
+```
+$ greengo deploy
+```
+
+This will deploy the configurations you define in `greengo.yaml` to the IoT Greengrass Core on the edge device.  So far we haven't defined any Lambda functions yet in our Greengo configuration, so this deployment just initializes the IoT Greengrass Core. We will add a Lambda function to our IoT Greengrass set up after we do a quick sanity test in the next step.
