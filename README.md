@@ -9,6 +9,15 @@ Many scenarios of object detection happen in places with limited connectivity/ba
 
 This repo contains useful scripts and Juypter notebooks from collecting training data from a webcam to data labeling, to building an object detection model using built-in SSD model from Amazon SageMaker, and finally, deploying it to run and make inference the edge using AWS IoT Greengrass.
   
+  
+## Accompanying Blog posts 
+
+This repo supports the 3-part blog post on AWS IoT blog: **Training the Amazon SageMaker object detection model and running it on AWS IoT Greengrass**
+
+* Part 1: https://aws.amazon.com/blogs/iot/sagemaker-object-detection-greengrass-part-1-of-3/
+* Part 2: https://aws.amazon.com/blogs/iot/sagemaker-object-detection-greengrass-part-2-of-3/
+* Part 3: https://aws.amazon.com/blogs/iot/sagemaker-object-detection-greengrass-part-3-of-3/
+  
 ## Architecture 
 ![architecture-diagram](./imgs/architeture-diagram.png)
 
